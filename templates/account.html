@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+ {% block title %}Account - K-Mart{% endblock %}
+
+ {% block content %}
+ <div class="account-container">
+
+    <div class="account-header">
+    <img src="{{ url_for('static', filename='images/account.png') }}" alt="User Avatar" class="account-avatar">
+    <h2>Account Details</h2>
+    </div>
+  
+    <div class="account-details">
+    <div class="detail-item">
+    <label>Full Name:</label>
+    <span>{{ user.full_name }}</span>
+    </div>
+    <div class="detail-item">
+    <label>Email:</label>
+    <span>{{ user.email }}</span>
+    </div>
+    <div class="detail-item">
+    <label>Address:</label>
+    <span>{{ user.address }}</span>
+    </div>
+    <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+  
+ {% endblock %}

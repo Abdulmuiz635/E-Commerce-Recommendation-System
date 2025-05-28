@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}K-Mart{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="/static/images/logo.png">
+</head>
+<body class="gradient-bg">
+  <header class="header">
+    <div class="logo">
+      <a href="/">🛍️ <strong>K-Mart</strong></a>
+    </div>
+    <form action="/search" method="get">
+      <input type="text" name="q" placeholder="Search products...">
+      <button type="submit">🔍</button>
+    </form>
+
+    <nav class="nav-links">
+      {% if session.user_id %}
+        <span>Hi, {{ session.user_name.split(' ')[0] }}</span>
+        <a href="/account">Account</a>
+      {% else %}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      {% endif %}
+      <a href="/cart">🛒 Cart <span class="cart-count">{{ session.get('cart', [])|length }}</span></a>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block extra_scripts %}
+  {% endblock %}
+
+</body>
+</html>

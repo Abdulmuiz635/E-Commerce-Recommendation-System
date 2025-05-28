@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} - K-Mart{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">
+        {{ message }}
+      </div>
+      <script>
+        setTimeout(function() {
+          const flashMessage = document.getElementById('flash-message');
+          if (flashMessage) {
+            flashMessage.style.display = 'none';
+          }
+        }, 3000); 
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<div class="product-detail-container" style="display: flex; flex-wrap: wrap; gap: 2rem; padding: 2rem; background: #fff; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 1200px; margin: 2rem auto;">
+
+  <div class="product-image" style="flex: 1 1 300px; max-width: 500px; text-align: center;">
+    <img src="{{ product.image_path }}" alt="{{ product.name }}" style="max-width: 100%; border-radius: 12px; object-fit: cover;">
+  </div>
+
+  <div class="product-info" style="flex: 1 1 300px;">
+    <h1 style="font-size: 2rem; color: #e91e63; margin-bottom: 0.5rem;">{{ product.name }}</h1>
+    <p class="category" style="color: #888; font-style: italic;">Category: {{ product.category }}</p>
+    <p class="price" style="font-size: 1.5rem; color: #333; margin: 1rem 0;">₦{{ product.price }}</p>
+    <p class="description" style="color: #555; line-height: 1.6;">{{ product.description }}</p>
+
+    <form id="add-to-cart-form" method="POST" action="/add_to_cart/{{ product.id }}" style="margin-top: 2rem;">
+      <input type="hidden" name="product_id" value="{{ product.id }}">
+      <button type="submit" class="btn add-btn" style="background-color: #e91e63; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+        🛒 Add to Cart
+      </button>
+      <p id="add-to-cart-message" style="display: none; color: green; margin-top: 0.5rem;">✅ Added to cart successfully!</p>
+    </form>
+
+    <button id="show-recommendations-btn" class="btn" style="margin-top: 1rem; background-color: #007bff; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+      💡 View Recommendations
+    </button>
+  </div>
+
+</div>
+
+<div id="toast-popup" class="toast-popup">
+  <h3>Recommended For You</h3>
+  <div id="recommendation-list">
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

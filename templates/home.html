@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - K-Mart{% endblock %}
+
+{% block content %}
+<div class="product-grid">
+  {% for product in products %}
+  <div class="product-card">
+    <a href="/product/{{ product.id }}">
+      <img src="{{ product.image_path }}" alt="{{ product.name }}">
+    </a>
+    <h4>{{ product.name }}</h4>
+    <p>₦{{ product.price }}</p>
+    <a href="/product/{{ product.id }}" class="btn">View</a>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
